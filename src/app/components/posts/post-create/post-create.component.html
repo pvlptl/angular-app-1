@@ -1,0 +1,16 @@
+<h2>Create New Post</h2>
+
+<mat-card>
+
+  <mat-form-field class="example-full-width">
+    <input [(ngModel)]="title" matInput placeholder="Post Title">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <textarea matInput [(ngModel)]="content" cols="30" rows="10" placeholder="Post Content"></textarea>
+  </mat-form-field>
+</mat-card>
+
+<div class="example-button-row">
+  <button (click)="onAddPost()" mat-raised-button color="primary">Add Post</button>
+</div>
