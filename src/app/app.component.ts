@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {PostModel} from './components/posts/post.model';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +7,4 @@ import {PostModel} from './components/posts/post.model';
 })
 
 export class AppComponent {
-  storedPosts: PostModel[] = [];
-  onPostAdded(post) {
-    this.storedPosts.unshift(post);
-  }
 }
