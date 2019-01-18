@@ -15,5 +15,5 @@
 
     </mat-expansion-panel>
   </mat-accordion>
-  <p class="mat-body-1 info-text" *ngIf="posts.length === 0">No posts found...</p>
+  <div *ngIf="posts.length === 0" class="loader">Loading...</div>
 </div>

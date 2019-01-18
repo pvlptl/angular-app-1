@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCardModule, MatExpansionModule, MatInputModule, MatToolbarModule} from '@angular/material';
 import {HeaderComponent} from './components/header/header.component';
 import {PostsListComponent} from './components/posts/posts-list/posts-list.component';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {PostsListComponent} from './components/posts/posts-list/posts-list.compo
     PostsListComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,

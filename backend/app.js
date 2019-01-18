@@ -67,11 +67,13 @@ app.get('/api/posts', (req, res) => {
         content: post.content
       }));
 
-      // send data to client
-      res.status(200).json({
-        message: 'posts loaded.',
-        posts
-      });
+      setTimeout(() => {
+        // send data to client
+        res.status(200).json({
+          message: 'posts loaded.',
+          posts
+        });
+      }, 1000);
 
     })
     .catch(err => res.status(404).json({ // catch an error and send it to client

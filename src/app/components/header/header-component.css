@@ -1,0 +1,11 @@
+.example-fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+.logo {
+  color: white;
+}
