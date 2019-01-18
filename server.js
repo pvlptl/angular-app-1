@@ -38,7 +38,7 @@ const onError = error => {
 
 const onListening = () => {
   const bind = typeof port === "string" ? "pipe " + port : "port " + port;
-  console.log(`Listening on port ${bind}`);
+  console.log(`Listening on ${bind}`);
 };
 
 const port = normalizePort(process.env.PORT || "3000");

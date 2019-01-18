@@ -18,6 +18,7 @@ export class PostsService {
     this.http.get<{message: string, posts: PostModel[]}>('http://localhost:3000/api/posts').subscribe(data => {
       this.posts = data.posts;
       this.postsUpadted.next([...this.posts]);
+      console.log('getPosts -> ' + data.message);
     });
   }
 
@@ -26,7 +27,19 @@ export class PostsService {
   }
 
   addPost(post: PostModel) {
-    this.posts.unshift(post);
-    this.postsUpadted.next([...this.posts]);
+    this.http.post<{message: string, post: PostModel}>('http://localhost:3000/api/posts', post).subscribe(res => {
+      console.log(res);
+      this.posts.push(res.post);
+      this.postsUpadted.next([...this.posts]);
+    });
   }
+
+  deletePost(id: string) {
+    this.http.delete<{message: string, post: PostModel}>(`http://localhost:3000/api/posts/${id}`).subscribe(res => {
+      console.log(res);
+      this.posts = this.posts.filter(post => post.id !== id); // lets generate a new array excluding the post which was deleted
+      this.postsUpadted.next([...this.posts]);
+    });
+  }
+
 }

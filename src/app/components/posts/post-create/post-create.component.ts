@@ -21,6 +21,7 @@ export class PostCreateComponent {
     }
     const {title, content} = form.value;
     const post: PostModel = {
+      id: null,
       title,
       content
     };

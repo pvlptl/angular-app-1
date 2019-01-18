@@ -12,7 +12,13 @@ import {Subscription} from 'rxjs';
 export class PostsListComponent implements OnInit, OnDestroy {
   posts: PostModel[] = [];
   private postsSub: Subscription;
+
   constructor(public postsService: PostsService) {}
+
+  onPostDelete(id: string) {
+    this.postsService.deletePost(id);
+  }
+
   ngOnInit() {
     this.postsService.getPosts();
     this.postsSub = this.postsService.getPostsUpdateListener().subscribe((posts: PostModel[]) => {
