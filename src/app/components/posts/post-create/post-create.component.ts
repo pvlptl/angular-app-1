@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PostModel} from '../post.model';
 import {NgForm} from '@angular/forms';
 import {PostsService} from '../posts.service';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 
 @Component({
   selector: 'app-post-create',
@@ -9,13 +10,30 @@ import {PostsService} from '../posts.service';
   styleUrls: ['./post-create.component.css']
 })
 
-export class PostCreateComponent {
+export class PostCreateComponent implements OnInit{
 
-  constructor(public postsService: PostsService) {
+  private mode = 'create';
+  private postId: string;
+  post: PostModel;
+
+  constructor(public postsService: PostsService, public route: ActivatedRoute) {
 
   }
 
-  onAddPost(form: NgForm) {
+  ngOnInit() {
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('id')) {
+        this.mode = 'edit';
+        this.postId = paramMap.get('id');
+        this.postsService.getPost(this.postId).subscribe(res => {
+          console.log(res);
+          this.post = res.post;
+        });
+      }
+    });
+  }
+
+  onSavePost(form: NgForm) {
     if (form.invalid) {
       return;
     }
@@ -25,7 +43,13 @@ export class PostCreateComponent {
       title,
       content
     };
-    this.postsService.addPost(post);
-    form.resetForm();
+    if (this.mode === 'create') {
+      form.resetForm();
+      this.postsService.addPost(post); // create post
+    }
+    else { // edit post
+      post.id = this.post.id;
+      this.postsService.editPost(post);
+    }
   }
 }

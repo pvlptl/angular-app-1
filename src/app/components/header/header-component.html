@@ -3,7 +3,10 @@
     <div class="logo">My App</div>
   </a>
   <span class="example-fill-remaining-space"></span>
-    <a routerLink="/create">
-      <button mat-raised-button color="basic">Create Post</button>
+    <a routerLink="/create" routerLinkActive="active">
+      <button mat-raised-button color="basic" routerLinkActive="active">
+        <i class="fas fa-folder-plus"></i>
+        Create Post
+      </button>
     </a>
 </mat-toolbar>

@@ -15,7 +15,7 @@ mongoose.connect(config.mongoose.uri, config.mongoose.options, err => {
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS, PUT');
   next();
 });
 
@@ -53,6 +53,74 @@ app.post('/api/posts', (req, res) => {
         error: err
       });
     });
+});
+
+app.put('/api/posts', (req, res) => {
+  // const id = req.params.id;
+  const {id, title, content} = req.body;
+  console.log(id);
+
+  Post.findById(id)
+    .then(post => {
+      post.title = title;
+      post.content = content;
+      post.save().then(data => {
+
+        // generate data for client
+        const post = {
+          id: data._id,
+          title: data.title,
+          content: data.content
+        };
+
+        res.status(200).json({
+          message: 'Post updated successfully.',
+          post
+        });
+
+      });
+    })
+    .catch(err => {
+      return res.status(400).json({
+        message: 'An error occurred during editing the post! Please try again later.',
+        error: err
+      });
+    });
+
+});
+
+app.get('/api/posts/:id', (req, res) => {
+
+  const {id} = req.params;
+  Post.findOne({_id: id})
+    .then(post => {
+
+      // if wrong id was provided
+      if (!post) {
+        return res.status(404).json({
+          message: 'The post not found!'
+        })
+      }
+
+      // generate data for client
+      const data = {
+        id: post._id,
+        title: post.title,
+        content: post.content
+      };
+
+      console.log(data);
+
+      res.status(200).json({
+        post: data
+      });
+
+    })
+    .catch(err => res.status(404).json({ // catch an error and send it to client
+      message: 'Unable to load posts.',
+      error: err
+    }));
+
 });
 
 app.get('/api/posts', (req, res) => {

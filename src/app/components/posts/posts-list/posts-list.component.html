@@ -9,7 +9,9 @@
       <p>{{post.content}}</p>
 
       <mat-action-row>
-        <button mat-raised-button color="accent" mat-button>Edit</button>
+        <a [routerLink]="['/edit', post.id]">
+          <button mat-raised-button color="accent" mat-button>Edit</button>
+        </a>
         <button (click)="onPostDelete(post.id)" mat-raised-button color="warn" mat-button>Delete</button>
       </mat-action-row>
 
