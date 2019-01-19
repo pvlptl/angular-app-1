@@ -1,38 +1,43 @@
-<h2>Create New Post</h2>
+<h2 *ngIf="mode === 'create'">Create New Post</h2>
+<h2 *ngIf="mode === 'edit'">Edit Post</h2>
 
 <mat-card>
-  <form (submit)="onSavePost(postForm)" #postForm="ngForm">
+  <form [formGroup]="form" (submit)="onSavePost()">
 
     <mat-form-field class="example-full-width">
       <input
         matInput
         placeholder="Post Title"
-        name="title"
-        [ngModel]="post?.title"
-        required
-        minlength="5"
-        #title="ngModel"
+        formControlName="title"
       >
-      <mat-error *ngIf="title.invalid">Please enter a proper title.</mat-error>
+      <mat-error *ngIf="form.get('title').invalid">Please enter a proper title.</mat-error>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <textarea
         matInput
+        placeholder="Post Content"
+        formControlName="content"
         cols="30"
         rows="10"
-        placeholder="Post Content"
-        name="content"
-        [ngModel]="post?.content"
-        required
-        minlength="10"
-        #content="ngModel"
       ></textarea>
-      <mat-error *ngIf="content.invalid">Please enter a proper content.</mat-error>
+      <mat-error *ngIf="form.get('content').invalid">Please enter a proper content.</mat-error>
     </mat-form-field>
 
+    <div>
+      <button (click)="filePicker.click()" type="button" mat-stroked-button>
+        <i class="fas fa-file-upload"></i>
+        Upload Image
+      </button>
+      <input (change)="onUploadImage($event)" type="file" #filePicker>
+      <div *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid" class="image-preview">
+        <img [src]="imagePreview" [alt]="form.value.title">
+      </div>
+    </div>
+
     <div class="example-button-row">
-      <button type="submit" mat-raised-button color="primary">Add Post</button>
+      <button *ngIf="mode === 'create'" type="submit" mat-raised-button color="primary">Add Post</button>
+      <button *ngIf="mode === 'edit'" type="submit" mat-raised-button color="primary">Edit Post</button>
     </div>
 
   </form>

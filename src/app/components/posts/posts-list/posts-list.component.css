@@ -6,6 +6,11 @@
   text-align: center;
 }
 
+.post-image {
+  width: 100%;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
 .loader,
 .loader:before,
 .loader:after {

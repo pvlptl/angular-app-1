@@ -17,3 +17,11 @@ h2 {
   color: #20002c;
 
 }
+
+input[type=file] {
+  visibility: hidden;
+}
+
+.image-preview img {
+  width: 150px;
+}
